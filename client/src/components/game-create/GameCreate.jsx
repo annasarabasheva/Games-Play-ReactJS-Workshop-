@@ -1,9 +1,20 @@
-export default function GameCreate() {
+import * as gameService from "../../services/gameService"
+import {useNavigate} from "react-router-dom"
+ 
 
-    const createGameSubmitHandler = (e) => {
+export default function GameCreate() {
+    const navigate = useNavigate()
+
+    const createGameSubmitHandler = async (e) => {
         e.preventDefault();
         const gameData = Object.fromEntries(new FormData(e.currentTarget));
-        console.log(gameData)
+
+        try {
+            await gameService.create(gameData)
+            navigate('/games')
+        }catch(err) {
+            console.log(err)
+        }
     }
 
     return (

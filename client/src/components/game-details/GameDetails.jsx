@@ -21,11 +21,12 @@ export default function GameDetails() {
 
         const formData = new FormData(e.currentTarget);
 
-        await commentService.create(
+        const newComment = await commentService.create(
             gameID,
             formData.get('username'),
             formData.get('comment')
         )
+        setComments(state => [...state, newComment])
         
     }
     
@@ -46,11 +47,10 @@ export default function GameDetails() {
                 {<div className="details-comments">
                 <h2>Comments:</h2>
                 <ul>
-                    {comments.map(comment => (<li className="comment">
+                    {comments.map(comment => (<li className="comment" key={comment._id}>
                     <p>{comment.username}: {comment.text}</p>
                     </li>))}
                     
-                   
                 </ul>
                 {comments.length === 0 && <p className="no-comment">No comments.</p>}
              

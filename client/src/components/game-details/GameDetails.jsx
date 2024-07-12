@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import * as gameService from "../../services/gameService"
-
+import * as commentService from "../../services/commentService"
 
 export default function GameDetails() {
     const {gameID} = useParams();
@@ -11,6 +11,17 @@ export default function GameDetails() {
             .then(setGame)
     }, [gameID])
 
+    const addCommentHandler = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        const newComment = await commentService.create(gameID,
+            formData.get('username'),
+            formData.get('comment')
+        )
+        console.log(newComment)
+    }
     
     return (
         <section id="game-details">
@@ -50,15 +61,16 @@ export default function GameDetails() {
                 </a>
                 </div> */}
             </div>
-            {/* Bonus */}
+         
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-           { /*<article className="create-comment">
+           <article className="create-comment">
                 <label>Add new comment:</label>
-                <form className="form">
-                <textarea name="comment" placeholder="Comment......" defaultValue={""} />
-                <input className="btn submit" type="submit" defaultValue="Add Comment" />
+                <form className="form" onSubmit={addCommentHandler}>
+                    <input type="text" name="username" placeholder="username"/>
+                    <textarea name="comment" placeholder="Comment......" defaultValue={""} />
+                    <input className="btn submit" type="submit" defaultValue="Add Comment" />
                 </form>
-            </article>*/}
+            </article>
         </section>
 
 

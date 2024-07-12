@@ -11,12 +11,11 @@ function App() {
     <div id="box">
 
         <Header/>
-        <Home/>
 
         <Routes>
-            <Route path="/"></Route>
-            <Route path="/games"><Catalogue/></Route>
-            <Route path="/games/create"></Route>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/games" element={<Catalogue/>}/>
+            <Route path="/games/create"/>
         </Routes>
 
 

@@ -5,11 +5,12 @@ import GameItem from "../catalogue/game-item/GameItem"
 
 export default function Catalogue() {
     const [games, setGames] = useState([])
+
     useEffect(() => {
         gameService.getAll()
             .then(result => setGames(result))
     }, [])
-    console.log(games)
+
     return (
         <section id="catalog-page">
             <h1>All Games</h1>

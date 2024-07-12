@@ -12,4 +12,16 @@ export const create = async (gameID, username, text) => {
 
     const result = await response.json();
     return result
-}
+};
+
+export const getAll = async () => {
+    const response = await fetch(baseUrl, {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json'
+        }
+    });
+
+    const result = await response.json();
+    return Object.values(result);
+};

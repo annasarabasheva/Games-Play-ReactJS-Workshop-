@@ -14,7 +14,7 @@ export const create = async (gameID, username, text) => {
     return result
 };
 
-export const getAll = async () => {
+export const getAll = async (gameID) => {
     const response = await fetch(baseUrl, {
         method: 'GET',
         headers: {
@@ -23,5 +23,5 @@ export const getAll = async () => {
     });
 
     const result = await response.json();
-    return Object.values(result);
+    return Object.values(result).filter(comments => comments.gameID === gameID);
 };

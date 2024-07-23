@@ -9,6 +9,7 @@ import Register from "./components/register/Register"
 import { Route, Routes, useNavigate } from "react-router-dom"
 import AuthContext from "./contexts/authContext"
 import * as authService from './services/authService'
+import Logout from "./components/logout/Logout"
 
 function App() {
     const navigate = useNavigate();
@@ -26,10 +27,16 @@ function App() {
         setAuth(result)
         navigate('/')
 
+    };
+
+    const logoutHandler = () => {
+        setAuth({})
+
     }
     const values = {
         loginSubmitHandler,
         registerSubmitHandler,
+        logoutHandler,
         username: auth.username || auth.email,
         email: auth.email,
         isAuthenticated: !!auth.email,
@@ -49,6 +56,7 @@ function App() {
                     <Route path="/games/details/:gameID" element={<GameDetails/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
+                    <Route path="/logout" element={<Logout/>}/>
                 </Routes>
 
 

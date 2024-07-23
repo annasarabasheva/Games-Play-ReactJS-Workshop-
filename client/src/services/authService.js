@@ -31,7 +31,9 @@ export const logout = async () => {
             'content-type': 'application/json'
         }
     });
-
+    if (response.status === 204) {
+        return {}
+    }
     const result = await response.json();
     return result;
 }

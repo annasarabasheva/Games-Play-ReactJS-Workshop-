@@ -9,6 +9,15 @@ export const login = async (email, password) => {
         body: JSON.stringify({email, password})
     });
 
+    const token = localStorage.getItem('accessToken')
+
+    if(token) {
+        response.headers = {
+            ...response.headers,
+            'X-Authorization': token
+        }
+    }
+
     const result = await response.json();
     return result;
 };
@@ -21,19 +30,44 @@ export const register = async (email, password) => {
         body: JSON.stringify({email, password})
     });
 
+    const token = localStorage.getItem('accessToken')
+
+    if(token) {
+        response.headers = {
+            ...response.headers,
+            'X-Authorization': token
+        }
+    }
+
     const result = await response.json();
     return result
 };
+
+
 export const logout = async () => {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+        throw new Error('No access token found');
+    }
+
     const response = await fetch(`${baseUrl}/logout`, {
         method: 'GET',
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'X-Authorization': token
         }
     });
+
     if (response.status === 204) {
-        return {}
+        return {}; // No content
     }
+
     const result = await response.json();
+
+    if (!response.ok) {
+        throw result;
+    }
+
     return result;
-}
+};

@@ -1,32 +1,23 @@
+import * as request from '../lib/request';
+
 const baseUrl = 'http://localhost:3030/data/comments';
 
-
-export const create = async (gameID, username, text) => {
-    const response = await fetch(baseUrl, {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify({gameID, username, text})
+export const getAll = async (gameId) => {
+    const query = new URLSearchParams({
+        where: `gameId="${gameId}"`,
+        load: `owner=_ownerId:users`,
     });
 
-    const result = await response.json();
-    return result
+    const result = await request.get(`${baseUrl}?${query}`);
+
+    return result;
 };
 
-export const getAll = async (gameID) => {
-
-    const query = new URLSearchParams( {
-        where: `gameId="${gameID}"`
+export const create = async (gameId, text) => {
+    const newComment = await request.post(baseUrl, {
+        gameId,
+        text,
     });
 
-    const response = await fetch(`${baseUrl}?${query}`, {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json'
-        }
-    });
-
-    const result = await response.json();
-    return result
+    return newComment;
 };

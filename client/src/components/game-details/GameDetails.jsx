@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
-import {useEffect, useState } from "react";
+import {useContext, useEffect, useState } from "react";
 import * as gameService from "../../services/gameService"
 import * as commentService from "../../services/commentService"
+import AuthContext from "../../contexts/authContext";
 
 
 export default function GameDetails() {
+    const {email} = useContext(AuthContext)
     const {gameID} = useParams();
     const [game, setGame] = useState({})
     const [comments, setComments] = useState([])
@@ -19,16 +21,11 @@ export default function GameDetails() {
 
     const addCommentHandler = async (e) => {
         e.preventDefault();
-
         const formData = new FormData(e.currentTarget);
-
-        const newComment = await commentService.create(
-            gameID,
-            formData.get('comment')
-        )
-        setComments(state => [...state, newComment])
-        
-    }
+        const newComment = await commentService.create(gameID, formData.get('comment'));
+        setComments(state => [...state, { ...newComment, author: { email } }]);
+    };
+    
     
     return (
         <section id="game-details">
@@ -47,9 +44,9 @@ export default function GameDetails() {
                 {<div className="details-comments">
                 <h2>Comments:</h2>
                 <ul>
-                {comments.map(({ _id, text }) => (
-                            <li key={_id} className="comment">
-                                <p>{text}</p>
+                {comments.map((comment) => (
+                            <li key={comment._id} className="comment">
+                                <p>{comment.author?.email || 'Anonymous'}: {comment.text}</p>
                             </li>
                         ))}
                     

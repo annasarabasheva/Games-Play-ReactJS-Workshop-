@@ -15,7 +15,12 @@ export const create = async (gameID, username, text) => {
 };
 
 export const getAll = async (gameID) => {
-    const response = await fetch(baseUrl, {
+
+    const query = new URLSearchParams( {
+        where: `gameId="${gameID}"`
+    });
+
+    const response = await fetch(`${baseUrl}?${query}`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json'
@@ -23,5 +28,5 @@ export const getAll = async (gameID) => {
     });
 
     const result = await response.json();
-    return result.filter(comments => comments.gameID === gameID);
+    return result
 };

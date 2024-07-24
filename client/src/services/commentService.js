@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3030/jsonstore/comments';
+const baseUrl = 'http://localhost:3030/data/comments';
 
 
 export const create = async (gameID, username, text) => {
@@ -23,5 +23,5 @@ export const getAll = async (gameID) => {
     });
 
     const result = await response.json();
-    return Object.values(result).filter(comments => comments.gameID === gameID);
+    return result.filter(comments => comments.gameID === gameID);
 };

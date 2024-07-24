@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3030/jsonstore/games';
+const baseUrl = 'http://localhost:3030/data/games';
 
 export const getOne = async (gameID) => {
     const response = await fetch(`${baseUrl}/${gameID}`, {
@@ -21,7 +21,7 @@ export const getAll = async () => {
     });
 
     const result = await response.json();
-    return Object.values(result);
+    return result;
 };
 
 export const create = async (gameData) => {

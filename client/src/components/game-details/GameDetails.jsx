@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import * as gameService from "../../services/gameService"
 import * as commentService from "../../services/commentService"
+
 
 export default function GameDetails() {
     const {gameID} = useParams();
@@ -23,7 +24,6 @@ export default function GameDetails() {
 
         const newComment = await commentService.create(
             gameID,
-            formData.get('username'),
             formData.get('comment')
         )
         setComments(state => [...state, newComment])
@@ -47,9 +47,11 @@ export default function GameDetails() {
                 {<div className="details-comments">
                 <h2>Comments:</h2>
                 <ul>
-                    {comments.map(comment => (<li className="comment" key={comment._id}>
-                    <p>{comment.username}: {comment.text}</p>
-                    </li>))}
+                {comments.map(({ _id, text }) => (
+                            <li key={_id} className="comment">
+                                <p>{text}</p>
+                            </li>
+                        ))}
                     
                 </ul>
                 {comments.length === 0 && <p className="no-comment">No comments.</p>}
@@ -70,7 +72,6 @@ export default function GameDetails() {
            <article className="create-comment">
                 <label>Add new comment:</label>
                 <form className="form" onSubmit={addCommentHandler}>
-                    <input type="text" name="username" placeholder="username"/>
                     <textarea name="comment" placeholder="Comment......" defaultValue={""} />
                     <input className="btn submit" type="submit" defaultValue="Add Comment" />
                 </form>

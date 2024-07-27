@@ -9,6 +9,7 @@ import Register from "./components/register/Register"
 import { Route, Routes} from "react-router-dom"
 import {AuthProvider} from "./contexts/authContext"
 import Logout from "./components/logout/Logout"
+import GameEdit from "./components/game-edit/GameEdit"
 
 function App() {
    
@@ -22,7 +23,8 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/games" element={<Catalogue/>}/>
                     <Route path="/games/create" element={<GameCreate/>}/>
-                    <Route path="/games/details/:gameID" element={<GameDetails/>}/>
+                    <Route path="/games/details/:gameId" element={<GameDetails/>}/>
+                    <Route path="/games/details/:gameId/edit" element={<GameEdit />} />
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/logout" element={<Logout/>}/>

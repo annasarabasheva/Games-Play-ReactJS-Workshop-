@@ -10,29 +10,32 @@ import { Route, Routes} from "react-router-dom"
 import {AuthProvider} from "./contexts/authContext"
 import Logout from "./components/logout/Logout"
 import GameEdit from "./components/game-edit/GameEdit"
+import ErrorBoundary from "./components/ErrorBoundary"
 
 function App() {
    
     return (
+        <ErrorBoundary>
+            <AuthProvider>
+                <div id="box">
+                    <Header/>
+
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/games" element={<Catalogue/>}/>
+                        <Route path="/games/create" element={<GameCreate/>}/>
+                        <Route path="/games/details/:gameId" element={<GameDetails/>}/>
+                        <Route path="/games/details/:gameId/edit" element={<GameEdit />} />
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/logout" element={<Logout/>}/>
+                    </Routes>
+
+
+                </div>
+            </AuthProvider>
+        </ErrorBoundary>
         
-        <AuthProvider>
-            <div id="box">
-                <Header/>
-
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/games" element={<Catalogue/>}/>
-                    <Route path="/games/create" element={<GameCreate/>}/>
-                    <Route path="/games/details/:gameId" element={<GameDetails/>}/>
-                    <Route path="/games/details/:gameId/edit" element={<GameEdit />} />
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/logout" element={<Logout/>}/>
-                </Routes>
-
-
-            </div>
-        </AuthProvider>
        
 
   )

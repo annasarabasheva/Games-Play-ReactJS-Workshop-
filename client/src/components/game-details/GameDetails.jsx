@@ -87,7 +87,7 @@ export default function GameDetails() {
 
                 {userId === game._ownerId && (
                     <div className="buttons">
-                        <Link to={`/games/details/${gameId}/edit`} className="button">Edit</Link>
+                        <Link to={`/games/${gameId}/edit`} className="button">Edit</Link>
                         <button className="button" onClick={deleteButtonClickHandler}>Delete</button>
                     </div>
                 )}

@@ -11,11 +11,12 @@ import {AuthProvider} from "./contexts/authContext"
 import Logout from "./components/logout/Logout"
 import GameEdit from "./components/game-edit/GameEdit"
 import ErrorBoundary from "./components/ErrorBoundary"
+import BaseRouthGuard from "./components/guards/BaseRouthGuard"
 
 function App() {
    
     return (
-        <ErrorBoundary>
+        <ErrorBoundary> 
             <AuthProvider>
                 <div id="box">
                     <Header/>
@@ -23,7 +24,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/games" element={<Catalogue/>}/>
-                        <Route path="/games/create" element={<GameCreate/>}/>
+                        <Route path="/games/create" element={<BaseRouthGuard> <GameCreate/> </BaseRouthGuard>}/> 
                         <Route path="/games/details/:gameId" element={<GameDetails/>}/>
                         <Route path="/games/details/:gameId/edit" element={<GameEdit />} />
                         <Route path="/login" element={<Login/>}/>
